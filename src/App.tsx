@@ -1,59 +1,70 @@
-import { useState } from 'react'
-import Editor from '@monaco-editor/react'
-
-const files = {
-  'index.html': {
-    name: 'index.html',
-    language: 'html',
-    value: '<h1>Hello, World</h1>',
-  },
-  'style.css': {
-    name: 'style.css',
-    language: 'css',
-    value: 'h1 { color: white; }',
-  },
-  'app.js': {
-    name: 'app.js',
-    language: 'javascript',
-    value: `console.log('Hello, World')`,
-  },
-}
+import { useRef } from 'react'
+import { Editor } from './Editor'
 
 export function App() {
-  const [fileName, setFileName] = useState<string>('index.html')
-  const { name, language, value } = files[fileName]
+  const iframeElement = useRef<HTMLIFrameElement>(null)
+
+  function handleEditorChange(value: string) {
+    iframeElement.current?.contentWindow.postMessage(
+      { type: 'html', message: value },
+      '*'
+    )
+  }
 
   return (
-    <>
-      <button
-        disabled={fileName === 'index.html'}
-        onClick={() => setFileName('index.html')}
-      >
-        index.html
-      </button>
-      <button
-        disabled={fileName === 'style.css'}
-        onClick={() => setFileName('style.css')}
-      >
-        style.css
-      </button>
-      <button
-        disabled={fileName === 'app.js'}
-        onClick={() => setFileName('app.js')}
-      >
-        app.js
-      </button>
-      <Editor
-        height="100vh"
-        path={name}
-        defaultLanguage={language}
-        defaultValue={value}
-        theme="vs-dark"
-        options={{
-          fontFamily: 'IBM Plex Mono, sans-serif',
-          fontSize: 18,
-        }}
-      />
-    </>
+    <main className="grid grid-cols-layout h-screen">
+      <section className="space-y-8 p-8 border-r border-gray-900">
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Introduction</h2>
+          <p className="text-gray-400">
+            Welcome to the <strong>React tutorial</strong>. This will teach you
+            everything you need to know to build <strong>React</strong>{' '}
+            applications.
+          </p>
+        </div>
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">What is React?</h2>
+          <p className="text-gray-400">
+            React is a <strong>declarative</strong>,{' '}
+            <strong>component-based</strong> library for building user
+            interfaces.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div className="h-1/2 overflow-hidden">
+          <Editor handleEditorChange={handleEditorChange} />
+        </div>
+        <div className="h-1/2 p-4 border-t border-gray-900 bg-gray-700">
+          <iframe
+            ref={iframeElement}
+            className="w-full h-full"
+            srcDoc="
+              <html>
+                <head>
+                  <style>
+                    body {
+                      font-family: 'Inter', sans-serif;
+                      color: white;
+                    }
+                  </style>
+                </head>
+                <body>
+                </body>
+                <script>
+                  function handleMessage(event) {
+                    const { type, message } = event.data;
+                    if (type === 'html') {
+                      document.body.innerHTML = message
+                    }
+                  }
+                  window.addEventListener('message', handleMessage, false)
+                </script>
+              </html>
+            "
+          />
+        </div>
+      </section>
+    </main>
   )
 }
