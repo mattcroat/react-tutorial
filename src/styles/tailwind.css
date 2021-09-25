@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  @apply w-1;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-600;
+}
+
+html {
+  scrollbar-color: theme('colors.blue.600') theme('colors.gray.800');
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
