@@ -37,23 +37,23 @@ export function Editor({
 
   return (
     <>
-      <div className="space-x-1 border-b border-gray-700">
+      <div className="border-b border-gray-800">
         <button
-          className="p-2 bg-gray-800 border-b-2 border-blue-600"
+          className="px-5 py-2 bg-gray-800 border-b-2 border-blue-600"
           disabled={fileName === 'index.html'}
           onClick={() => setFileName('index.html')}
         >
           index.html
         </button>
         <button
-          className="p-2 bg-gray-900 border-r border-gray-700"
+          className="px-5 py-2 border-r border-gray-800"
           disabled={fileName === 'style.css'}
           onClick={() => setFileName('style.css')}
         >
           style.css
         </button>
         <button
-          className="p-2 bg-gray-900 border-r border-gray-700"
+          className="px-5 py-2 border-r border-gray-800"
           disabled={fileName === 'app.js'}
           onClick={() => setFileName('app.js')}
         >
