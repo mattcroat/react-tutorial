@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Chapters } from './Chapters'
 import { Editor } from './Editor'
 import { Iframe } from './Iframe'
 
@@ -21,6 +22,9 @@ export function App() {
   return (
     <main className="grid h-screen grid-cols-layout">
       <section className="p-8 space-y-8 bg-gray-800 border-r border-gray-700">
+        <div>
+          <Chapters />
+        </div>
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">Introduction</h2>
           <p className="text-gray-400">
