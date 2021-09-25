@@ -1,19 +1,26 @@
-import { useRef } from 'react'
+import { useState } from 'react'
+
 import { Editor } from './Editor'
+import { Iframe } from './Iframe'
+
+import type { OnChange, OnMount } from '@monaco-editor/react'
 
 export function App() {
-  const iframeElement = useRef<HTMLIFrameElement>(null)
+  const [html, setHtml] = useState<string>('')
 
-  function handleEditorChange(value: string) {
-    iframeElement.current?.contentWindow.postMessage(
-      { type: 'html', message: value },
-      '*'
-    )
+  const handleEditorChange: OnChange = (value) => {
+    if (!value) return
+    setHtml(value)
+  }
+
+  const handleEditorDidMount: OnMount = (editor) => {
+    const value = editor.getValue()
+    setHtml(value)
   }
 
   return (
-    <main className="grid grid-cols-layout h-screen">
-      <section className="space-y-8 p-8 border-r border-gray-900">
+    <main className="grid h-screen grid-cols-layout">
+      <section className="p-8 space-y-8 border-r border-gray-900">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">Introduction</h2>
           <p className="text-gray-400">
@@ -32,37 +39,14 @@ export function App() {
         </div>
       </section>
       <section>
-        <div className="h-1/2 overflow-hidden">
-          <Editor handleEditorChange={handleEditorChange} />
-        </div>
-        <div className="h-1/2 p-4 border-t border-gray-900 bg-gray-700">
-          <iframe
-            ref={iframeElement}
-            className="w-full h-full"
-            srcDoc="
-              <html>
-                <head>
-                  <style>
-                    body {
-                      font-family: 'Inter', sans-serif;
-                      color: white;
-                    }
-                  </style>
-                </head>
-                <body>
-                </body>
-                <script>
-                  function handleMessage(event) {
-                    const { type, message } = event.data;
-                    if (type === 'html') {
-                      document.body.innerHTML = message
-                    }
-                  }
-                  window.addEventListener('message', handleMessage, false)
-                </script>
-              </html>
-            "
+        <div className="overflow-hidden h-1/2">
+          <Editor
+            handleEditorChange={handleEditorChange}
+            handleEditorDidMount={handleEditorDidMount}
           />
+        </div>
+        <div className="p-4 bg-gray-700 border-t border-gray-900 h-1/2">
+          <Iframe html={html} />
         </div>
       </section>
     </main>

@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
+import type { OnChange, OnMount } from '@monaco-editor/react'
+
+interface EditorProps {
+  handleEditorChange: OnChange
+  handleEditorDidMount: OnMount
+}
+
 type Files = keyof typeof files
 
 const files = {
@@ -21,7 +28,10 @@ const files = {
   },
 }
 
-export function Editor({ handleEditorChange }) {
+export function Editor({
+  handleEditorChange,
+  handleEditorDidMount,
+}: EditorProps) {
   const [fileName, setFileName] = useState<Files>('index.html')
   const { name, language, value } = files[fileName]
 
@@ -52,6 +62,7 @@ export function Editor({ handleEditorChange }) {
         defaultLanguage={language}
         defaultValue={value}
         onChange={handleEditorChange}
+        onMount={handleEditorDidMount}
         path={name}
         theme="vs-dark"
         options={{
