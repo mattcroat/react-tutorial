@@ -20,7 +20,7 @@ export function App() {
 
   return (
     <main className="grid h-screen grid-cols-layout">
-      <section className="p-8 space-y-8 border-r border-gray-900">
+      <section className="p-8 space-y-8 bg-gray-800 border-r border-gray-700">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">Introduction</h2>
           <p className="text-gray-400">
@@ -39,13 +39,13 @@ export function App() {
         </div>
       </section>
       <section>
-        <div className="overflow-hidden h-1/2">
+        <div className="overflow-hidden bg-gray-900 border-b border-gray-700 h-1/2">
           <Editor
             handleEditorChange={handleEditorChange}
             handleEditorDidMount={handleEditorDidMount}
           />
         </div>
-        <div className="p-4 bg-gray-700 border-t border-gray-900 h-1/2">
+        <div className="p-4 bg-gray-900 border-t border-gray-700 h-1/2">
           <Iframe html={html} />
         </div>
       </section>

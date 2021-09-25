@@ -37,27 +37,29 @@ export function Editor({
 
   return (
     <>
-      <button
-        className="p-2 bg-gray-900"
-        disabled={fileName === 'index.html'}
-        onClick={() => setFileName('index.html')}
-      >
-        index.html
-      </button>
-      <button
-        className="p-2 bg-gray-700"
-        disabled={fileName === 'style.css'}
-        onClick={() => setFileName('style.css')}
-      >
-        style.css
-      </button>
-      <button
-        className="p-2 bg-gray-700"
-        disabled={fileName === 'app.js'}
-        onClick={() => setFileName('app.js')}
-      >
-        app.js
-      </button>
+      <div className="space-x-1 border-b border-gray-700">
+        <button
+          className="p-2 bg-gray-800 border-b-2 border-blue-600"
+          disabled={fileName === 'index.html'}
+          onClick={() => setFileName('index.html')}
+        >
+          index.html
+        </button>
+        <button
+          className="p-2 bg-gray-900 border-r border-gray-700"
+          disabled={fileName === 'style.css'}
+          onClick={() => setFileName('style.css')}
+        >
+          style.css
+        </button>
+        <button
+          className="p-2 bg-gray-900 border-r border-gray-700"
+          disabled={fileName === 'app.js'}
+          onClick={() => setFileName('app.js')}
+        >
+          app.js
+        </button>
+      </div>
       <MonacoEditor
         defaultLanguage={language}
         defaultValue={value}
