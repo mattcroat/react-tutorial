@@ -21,21 +21,21 @@ export function App() {
 
   return (
     <main className="grid h-screen grid-cols-layout">
-      <section className="p-8 space-y-8 bg-gray-800 border-r border-gray-700">
+      <section className="px-8 pt-2 space-y-8 bg-gray-800 border-r border-gray-700">
+        <h1 className="text-2xl">Introduction</h1>
         <div>
           <Chapters />
         </div>
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Introduction</h2>
-          <p className="text-gray-400">
+          <p>
             Welcome to the <strong>React tutorial</strong>. This will teach you
             everything you need to know to build <strong>React</strong>{' '}
             applications.
           </p>
         </div>
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">What is React?</h2>
-          <p className="text-gray-400">
+          <h2 className="text-2xl">What is React?</h2>
+          <p>
             React is a <strong>declarative</strong>,{' '}
             <strong>component-based</strong> library for building user
             interfaces.

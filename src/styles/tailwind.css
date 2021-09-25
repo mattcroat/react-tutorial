@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,5 +19,9 @@
 html {
   scrollbar-color: theme('colors.blue.600') theme('colors.gray.800');
   scrollbar-width: thin;
-  overflow-x: hidden;
+}
+
+button,
+option {
+  @apply font-light;
 }

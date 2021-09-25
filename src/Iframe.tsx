@@ -26,6 +26,10 @@ export function Iframe({ html }: IframeProps) {
               font-family: 'Inter', sans-serif;
               color: white;
             }
+
+            h1 {
+              font-weight: 300;
+            }
           </style>
         </head>
         <body>
