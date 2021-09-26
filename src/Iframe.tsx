@@ -1,24 +1,35 @@
 import { useEffect, useRef } from 'react'
 
 interface IframeProps {
-  html: string
+  value: string | undefined
+  language: string
 }
 
-export function Iframe({ html }: IframeProps) {
+export function Iframe({ value, language }: IframeProps) {
   const iframeEl = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
-    const content = iframeEl.current?.contentWindow
-    if (content) {
-      content.postMessage({ type: 'html', message: html }, '*')
+    const iframe = iframeEl.current?.contentWindow
+    if (!iframe) return
+
+    if (language === 'css') {
+      iframe.postMessage({ type: 'css', value }, '*')
     }
-  }, [html])
+
+    if (language === 'html') {
+      iframe.postMessage({ type: 'html', value }, '*')
+    }
+
+    if (language === 'javascript') {
+      iframe.postMessage({ type: 'javascript', value }, '*')
+    }
+  }, [value])
 
   return (
     <iframe
       ref={iframeEl}
       className="w-full h-full"
-      srcDoc="
+      srcDoc={`
       <html>
         <head>
           <style>
@@ -31,20 +42,39 @@ export function Iframe({ html }: IframeProps) {
               font-weight: 300;
             }
           </style>
+          <script src="https://unpkg.com/react@17/umd/react.development.js" defer></script>
+          <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" defer></script>
+          <script src="https://unpkg.com/@babel/standalone@7.15.7/babel.min.js" defer></script>
+          <script type="module">
+            function handleMessage(event) {
+              const { type, value } = event.data;
+              
+              if (type === 'css') {
+                document.querySelector('style').innerHTML = value
+              }
+              
+              if (type === 'html') {
+                document.body.innerHTML = value;
+              }
+
+              if (type === 'javascript') {
+                document.querySelector('#script').innerHTML = value
+                const options = { presets: ['es2015-loose', 'react'] }
+                const { code } = Babel.transform(value, options)
+                eval(code)
+              }
+            }
+            
+            window.addEventListener('message', handleMessage, false);
+          </script>
+          <script id="script" type="module">
+          </script>
         </head>
         <body>
+          <div id="app"></div>
         </body>
-        <script>
-          function handleMessage(event) {
-            const { type, message } = event.data;
-            if (type === 'html') {
-              document.body.innerHTML = message;
-            }
-          }
-          window.addEventListener('message', handleMessage, false);
-        </script>
       </html>
-    "
+     `}
     />
   )
 }

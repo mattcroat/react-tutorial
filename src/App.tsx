@@ -4,19 +4,28 @@ import { Chapters } from './Chapters'
 import { Editor } from './Editor'
 import { Iframe } from './Iframe'
 
-import type { OnChange, OnMount } from '@monaco-editor/react'
-
 export function App() {
-  const [html, setHtml] = useState<string>('')
+  const [content, setContent] = useState<{
+    value: string | undefined
+    language: string
+  }>({
+    value: '',
+    language: '',
+  })
+  const { value, language } = content
 
-  const handleEditorChange: OnChange = (value) => {
-    if (!value) return
-    setHtml(value)
+  function handleEditorChange(
+    value: string | undefined,
+    _event: any,
+    language: string
+  ) {
+    setContent({ value, language })
   }
 
-  const handleEditorDidMount: OnMount = (editor) => {
+  function handleEditorDidMount(editor: any) {
     const value = editor.getValue()
-    setHtml(value)
+    console.log(value)
+    setContent({ value, language: 'javascript' })
   }
 
   return (
@@ -45,14 +54,14 @@ export function App() {
         </div>
       </section>
       <section>
-        <div className="overflow-hidden bg-[#1e1e1e] border-b border-gray-800 h-1/2">
+        <div className="overflow-hidden border-b border-gray-800 bg-dark h-1/2">
           <Editor
             handleEditorChange={handleEditorChange}
             handleEditorDidMount={handleEditorDidMount}
           />
         </div>
-        <div className="p-4 bg-[#1e1e1e] border-t border-gray-800 h-1/2">
-          <Iframe html={html} />
+        <div className="p-4 border-t border-gray-800 bg-dark h-1/2">
+          <Iframe value={value} language={language} />
         </div>
       </section>
     </main>

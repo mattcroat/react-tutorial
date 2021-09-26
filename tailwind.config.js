@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         gray: colors.gray,
+        dark: '#1e1e1e',
       },
       gridTemplateColumns: {
         layout: '40% 1fr',

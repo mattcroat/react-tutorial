@@ -1,69 +1,56 @@
 import { useState } from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
-import type { OnChange, OnMount } from '@monaco-editor/react'
+import { files } from './Files'
 
 interface EditorProps {
-  handleEditorChange: OnChange
-  handleEditorDidMount: OnMount
-}
-
-type Files = keyof typeof files
-
-const files = {
-  'index.html': {
-    name: 'index.html',
-    language: 'html',
-    value: '<h1>Hello, World</h1>',
-  },
-  'style.css': {
-    name: 'style.css',
-    language: 'css',
-    value: 'h1 { color: white; }',
-  },
-  'app.js': {
-    name: 'app.js',
-    language: 'javascript',
-    value: `console.log('Hello, World')`,
-  },
+  handleEditorChange: (
+    value: string | undefined,
+    event: any,
+    language: string
+  ) => void
+  handleEditorDidMount: (editor: any) => void
 }
 
 export function Editor({
   handleEditorChange,
   handleEditorDidMount,
 }: EditorProps) {
-  const [fileName, setFileName] = useState<Files>('index.html')
+  const [fileName, setFileName] = useState<keyof typeof files>('app.jsx')
   const { name, language, value } = files[fileName]
+
+  function selected(file: string) {
+    return fileName === file
+      ? 'px-5 py-2 bg-gray-700 border-b-2 border-blue-600'
+      : 'px-5 py-2 bg-gray-800'
+  }
 
   return (
     <>
       <div className="border-b border-gray-800">
         <button
-          className="px-5 py-2 bg-gray-800 border-b-2 border-blue-600"
-          disabled={fileName === 'index.html'}
+          className={selected('app.jsx')}
+          onClick={() => setFileName('app.jsx')}
+        >
+          app.jsx
+        </button>
+        <button
+          className={selected('index.html')}
           onClick={() => setFileName('index.html')}
         >
           index.html
         </button>
         <button
-          className="px-5 py-2 border-r border-gray-800"
-          disabled={fileName === 'style.css'}
+          className={selected('style.css')}
           onClick={() => setFileName('style.css')}
         >
           style.css
-        </button>
-        <button
-          className="px-5 py-2 border-r border-gray-800"
-          disabled={fileName === 'app.js'}
-          onClick={() => setFileName('app.js')}
-        >
-          app.js
         </button>
       </div>
       <MonacoEditor
         defaultLanguage={language}
         defaultValue={value}
-        onChange={handleEditorChange}
+        onChange={(value, event) => handleEditorChange(value, event, language)}
         onMount={handleEditorDidMount}
         path={name}
         theme="vs-dark"
