@@ -25,3 +25,7 @@ button,
 option {
   @apply font-light;
 }
+
+.monaco-editor textarea:focus {
+  box-shadow: none;
+}
