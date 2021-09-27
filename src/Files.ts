@@ -8,11 +8,21 @@ const htmlCode = `
 `.trim()
 
 const javaScriptCode = `
+import React, { useState } from 'https://cdn.skypack.dev/react'
+import { render } from 'https://cdn.skypack.dev/react-dom'
+
 function App() {
-  return <h1>Hello, World</h1>
+  const [count, setCount] = useState(0)
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click</button>
+    </div>
+  )
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+render(<App />, document.querySelector('#app'))
 `.trim()
 
 export const files = {

@@ -33,24 +33,27 @@ export function Iframe({ value, language }: IframeProps) {
       <html>
         <head>
           <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
             body {
               font-family: 'Inter', sans-serif;
+              font-weight: 300;
               color: white;
             }
-
-            h1 {
+            
+            h1, h2, h3, h4, h5, h6 {
               font-weight: 300;
             }
           </style>
-          <script src="https://unpkg.com/react@17/umd/react.development.js" defer></script>
-          <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" defer></script>
+          <style id="styles">
+          </style>
           <script src="https://unpkg.com/@babel/standalone@7.15.7/babel.min.js" defer></script>
-          <script type="module">
+          <script>
             function handleMessage(event) {
               const { type, value } = event.data;
               
               if (type === 'css') {
-                document.querySelector('style').innerHTML = value
+                document.querySelector('#styles').innerHTML = value;
               }
               
               if (type === 'html') {
@@ -58,16 +61,19 @@ export function Iframe({ value, language }: IframeProps) {
               }
 
               if (type === 'javascript') {
-                document.querySelector('#script').innerHTML = value
-                const options = { presets: ['es2015-loose', 'react'] }
-                const { code } = Babel.transform(value, options)
-                eval(code)
+                const options = { presets: ['react'] };
+                const { code } = Babel.transform(value, options);
+
+                const headEl = document.head
+                const scriptEl = document.createElement('script')
+                const textNodeEl = document.createTextNode(code)
+                scriptEl.type = 'module'
+                scriptEl.appendChild(textNodeEl)
+                headEl.appendChild(scriptEl)
               }
             }
             
             window.addEventListener('message', handleMessage, false);
-          </script>
-          <script id="script" type="module">
           </script>
         </head>
         <body>
