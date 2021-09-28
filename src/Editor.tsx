@@ -3,23 +3,21 @@ import MonacoEditor from '@monaco-editor/react'
 
 import { files } from './Files'
 
+import type { EditorType, EditorChangeType, FileType } from './types'
+
 interface EditorProps {
-  handleEditorChange: (
-    value: string | undefined,
-    event: any,
-    language: string
-  ) => void
-  handleEditorDidMount: (editor: any) => void
+  handleEditorChange: EditorChangeType
+  handleEditorDidMount: EditorType
 }
 
 export function Editor({
   handleEditorChange,
   handleEditorDidMount,
 }: EditorProps) {
-  const [fileName, setFileName] = useState<keyof typeof files>('app.jsx')
+  const [fileName, setFileName] = useState<FileType>('app.jsx')
   const { name, language, value } = files[fileName]
 
-  function selected(file: string) {
+  const selected = (file: string) => {
     return fileName === file
       ? 'px-5 py-2 bg-gray-700 border-b-2 border-blue-600'
       : 'px-5 py-2 bg-gray-800'

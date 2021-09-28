@@ -1,0 +1,74 @@
+.monaco-editor .mtk1 {
+  color: #ffbdbd;
+}
+
+.monaco-editor .mtk5 {
+  color: #f3f3f3;
+}
+
+.monaco-editor .mtk8 {
+  color: #56abd6;
+}
+
+.monaco-editor .mtk9 {
+  color: #f3f3f3;
+}
+
+.monaco-editor .JSXElement.JSXIdentifier {
+  color: #d66e56;
+}
+
+.monaco-editor .JSXElement.JSXBracket {
+  color: #dcdcdc;
+}
+
+.monaco-editor .JSXElement.JSXText {
+  color: #dcdcdc;
+}
+
+.monaco-editor .JSXElement.JSXGlyph {
+  background: cyan;
+  opacity: 0.25;
+}
+
+.monaco-editor .JSXOpeningFragment.JSXBracket {
+  color: #dcdcdc;
+  font-weight: 400;
+}
+
+.monaco-editor .JSXClosingFragment.JSXBracket {
+  color: #dcdcdc;
+  font-weight: 400;
+}
+
+.monaco-editor .JSXOpeningElement.JSXBracket {
+  color: darkorange;
+}
+
+.monaco-editor .JSXOpeningElement.JSXIdentifier {
+  color: royalblue;
+}
+
+.monaco-editor .JSXClosingElement.JSXBracket {
+  color: darkorange;
+}
+
+.monaco-editor .JSXClosingElement.JSXIdentifier {
+  color: royalblue;
+}
+
+.monaco-editor .JSXAttribute.JSXIdentifier {
+  color: #56abd6;
+}
+
+.monaco-editor .JSXExpressionContainer.JSXBracket {
+  color: #dcdcdc;
+}
+
+.monaco-editor .JSXSpreadChild.JSXBracket {
+  color: darkorange;
+}
+
+.monaco-editor .JSXSpreadAttribute.JSXBracket {
+  color: darkorange;
+}

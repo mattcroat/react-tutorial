@@ -22,7 +22,7 @@ function App() {
   )
 }
 
-render(<App />, document.querySelector('#app'))
+render(<App />, document.getElementById('app'))
 `.trim()
 
 export const files = {

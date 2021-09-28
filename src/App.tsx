@@ -4,28 +4,47 @@ import { Chapters } from './Chapters'
 import { Editor } from './Editor'
 import { Iframe } from './Iframe'
 
+import type { ContentType, EditorType, EditorChangeType } from './types'
+
 export function App() {
-  const [content, setContent] = useState<{
-    value: string | undefined
-    language: string
-  }>({
+  const [content, setContent] = useState<ContentType>({
     value: '',
     language: '',
   })
   const { value, language } = content
 
-  function handleEditorChange(
-    value: string | undefined,
-    _event: any,
-    language: string
-  ) {
+  const highlightJSX: EditorType = async (monacoEditor, monacoInstance) => {
+    const { default: traverse } = await import('@babel/traverse')
+    const { parse } = await import('@babel/parser')
+    const { default: MonacoJSXHighlighter } = await import(
+      'monaco-jsx-highlighter'
+    )
+
+    const babelParse = (code: string) =>
+      parse(code, { sourceType: 'module', plugins: ['jsx'] })
+
+    const monacoJSXHighlighter = new MonacoJSXHighlighter(
+      monacoInstance,
+      babelParse,
+      traverse,
+      monacoEditor
+    )
+
+    monacoJSXHighlighter.highLightOnDidChangeModelContent()
+    monacoJSXHighlighter.addJSXCommentCommand()
+  }
+
+  const handleEditorChange: EditorChangeType = (value, _event, language) => {
     setContent({ value, language })
   }
 
-  function handleEditorDidMount(editor: any) {
-    const value = editor.getValue()
-    console.log(value)
+  const handleEditorDidMount: EditorType = async (
+    monacoEditor,
+    monacoInstance
+  ) => {
+    const value = monacoEditor.getValue()
     setContent({ value, language: 'javascript' })
+    highlightJSX(monacoEditor, monacoInstance)
   }
 
   return (
