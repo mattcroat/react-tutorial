@@ -1,3 +1,5 @@
+import type { FileType } from './types'
+
 const cssCode = `
 h1 {
   color: white;
@@ -25,7 +27,7 @@ function App() {
 render(<App />, document.getElementById('app'))
 `.trim()
 
-export const files = {
+export const files: FileType = {
   'index.html': {
     name: 'index.html',
     language: 'html',

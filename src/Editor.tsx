@@ -1,49 +1,23 @@
 import { useState } from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
+import { File } from './File'
 import { files } from './Files'
-
-import type { EditorType, EditorChangeType, FileType } from './types'
-
-interface EditorProps {
-  handleEditorChange: EditorChangeType
-  handleEditorDidMount: EditorType
-}
+import type { EditorProps } from './types'
 
 export function Editor({
   handleEditorChange,
   handleEditorDidMount,
 }: EditorProps) {
-  const [fileName, setFileName] = useState<FileType>('app.jsx')
+  const [fileName, setFileName] = useState<string>('app.jsx')
   const { name, language, value } = files[fileName]
-
-  const selected = (file: string) => {
-    return fileName === file
-      ? 'px-5 py-2 bg-gray-700 border-b-2 border-blue-600'
-      : 'px-5 py-2 bg-gray-800'
-  }
 
   return (
     <>
       <div className="border-b border-gray-800">
-        <button
-          className={selected('app.jsx')}
-          onClick={() => setFileName('app.jsx')}
-        >
-          app.jsx
-        </button>
-        <button
-          className={selected('index.html')}
-          onClick={() => setFileName('index.html')}
-        >
-          index.html
-        </button>
-        <button
-          className={selected('style.css')}
-          onClick={() => setFileName('style.css')}
-        >
-          style.css
-        </button>
+        <File fileName={'app.jsx'} name={name} setFileName={setFileName} />
+        <File fileName={'index.html'} name={name} setFileName={setFileName} />
+        <File fileName={'style.css'} name={name} setFileName={setFileName} />
       </div>
       <MonacoEditor
         defaultLanguage={language}

@@ -1,21 +1,50 @@
-import { files } from '../Files'
+import type { OnChange, OnMount } from '@monaco-editor/react'
 
-export type ValueType = string | undefined
+type OnChangeType = Parameters<OnChange>
+type OnMountType = Parameters<OnMount>
 
-type EventType = any
-type LanguageType = string
+export type ValueType = OnChangeType[0]
+export type EventType = OnChangeType[1]
+export type MonacoEditorType = OnMountType[0]
+export type MonacoInstanceType = OnMountType[1]
+export type LanguageType = string
 
-export type EditorType = (monacoEditor: any, monacoInstance: any) => void
-
-export type EditorChangeType = (
-  value: ValueType,
-  event: EventType,
-  language: LanguageType
-) => void
+export interface FileType {
+  [key: string]: {
+    name: string
+    language: string
+    value: string
+  }
+}
 
 export interface ContentType {
   value: ValueType
+  language: LanguageType
+}
+
+export interface EditorProps {
+  handleEditorChange: (
+    value: ValueType,
+    event: EventType,
+    language: LanguageType
+  ) => void
+  handleEditorDidMount: (
+    monacoEditor: MonacoEditorType,
+    monacoInstance: MonacoInstanceType
+  ) => void
+}
+
+export interface IframeProps {
+  value: string | undefined
   language: string
 }
 
-export type FileType = keyof typeof files
+export interface FileProps {
+  fileName: string
+  setFileName: React.Dispatch<React.SetStateAction<string>>
+  name: string
+}
+
+export interface ChildrenProps {
+  children: React.ReactNode
+}

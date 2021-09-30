@@ -1,9 +1,5 @@
 import { useEffect, useRef } from 'react'
-
-interface IframeProps {
-  value: string | undefined
-  language: string
-}
+import type { IframeProps } from './types'
 
 export function Iframe({ value, language }: IframeProps) {
   const iframeEl = useRef<HTMLIFrameElement>(null)
