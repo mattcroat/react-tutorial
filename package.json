@@ -13,12 +13,14 @@
     "@tailwindcss/forms": "^0.3.3",
     "monaco-jsx-highlighter": "^1.1.8",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.14.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.3.0",
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.3.5",
     "postcss": "^8.3.7",

@@ -8,6 +8,7 @@ export type EventType = OnChangeType[1]
 export type MonacoEditorType = OnMountType[0]
 export type MonacoInstanceType = OnMountType[1]
 export type LanguageType = string
+type ReactComponentType = React.ElementType
 
 export interface FileType {
   [key: string]: {
@@ -47,4 +48,30 @@ export interface FileProps {
 
 export interface ChildrenProps {
   children: React.ReactNode
+}
+
+export interface SelectedType {
+  value: string
+  text: string
+}
+
+export interface DataType {
+  section: string
+  chapters: {
+    name: string
+    path: string
+    component: ReactComponentType
+    files: {
+      [key: string]: {
+        name: string
+        language: string
+        value: string
+      }
+    }[]
+  }[]
+}
+
+export interface RouteType {
+  path: string
+  component: ReactComponentType
 }
